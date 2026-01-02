@@ -37,6 +37,7 @@ AUTHORS = [
     "MaddiicT",
     "magicrushon",
     "Masteri_Mori",
+    "Mountebank",
     "nerdynerd32",
     "OceanBagel",
     "PicklePlop",

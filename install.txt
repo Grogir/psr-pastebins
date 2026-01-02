@@ -1,9 +1,10 @@
 # python
 cd ~/psr-pastebins
+sudo apt update
+sudo apt install git -y
 git init
 git remote add origin https://github.com/Grogir/psr-pastebins.git
-git pull
-sudo apt update
+git pull origin master
 sudo apt install python3 python3-venv python3-pip -y
 python3 -m venv venv
 source venv/bin/activate
@@ -52,4 +53,9 @@ sudo systemctl enable psr-pastebins
 # cron
 crontab -e
 
-*/10 * * * * cd /home/_USER_/psr-pastebins && /home/_USER_/psr-pastebins/venv/bin/python scrape.py >> /home/_USER_/psr-pastebins/scrape.log 2>&1
+*/10 * * * * cd /home/_USER_/psr-pastebins && venv/bin/python scrape.py >> scrape.log 2>&1
+
+# pull changes
+cd ~/psr-pastebins
+git pull origin master
+sudo systemctl restart psr-pastebins

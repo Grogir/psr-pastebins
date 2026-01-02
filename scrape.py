@@ -98,7 +98,7 @@ def scrape_user_list_page(user, page):
         r = requests.get(f"https://pastebin.com/u/{user}/{page}", timeout=3)
     except Exception as e:
         print(f"Error fetching user {user} page {page}: {e}")
-        return
+        return pastes, last_page
     if r.status_code != 200:
         print(f"Error {r.status_code} fetching user {user} page {page}")
         return pastes, last_page
