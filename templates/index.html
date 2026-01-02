@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PSR Pastebins</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="left-panel">
+        <h1>PSR Pastebins</h1>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search title..."
+            onkeyup="applyFilters()"
+        >
+    </div>
+
+    <div class="authors-panel">
+        <div class="authors-grid">
+            {% for author in authors %}
+            <label>
+                <input
+                    type="checkbox"
+                    class="authorCheckbox"
+                    value="{{ author }}"
+                    checked
+                    onchange="applyFilters()"
+                >
+                {{ author }}
+            </label>
+            {% endfor %}
+            <button onclick="toggleAuthors()">All</button>
+        </div>
+    </div>
+</div>
+
+<table id="pastesTable">
+    <colgroup>
+        <col style="width:15%">
+        <col style="width:65%">
+        <col style="width:10%">
+        <col style="width:10%">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Archive</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in pastes %}
+        <tr data-author="{{ p.author }}">
+            <td>
+                {% if p.author != "none" %}
+                    <a href="https://pastebin.com/u/{{ p.author }}">
+                        {{ p.author }}
+                    </a>
+                {% endif %}
+            </td>
+            <td class="title">
+                <a href="https://pastebin.com/{{ p.key }}">
+                    {{ p.title }}
+                </a>
+            </td>
+            <td>{{ p.date }}</td>
+            <td class="archive">
+                <a href="/{{ p.key }}" title="View archived content">🗄️</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+# python
+cd ~/psr-pastebins
+git init
+git remote add origin https://github.com/Grogir/psr-pastebins.git
+git pull
+sudo apt update
+sudo apt install python3 python3-venv python3-pip -y
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# nginx
+sudo apt install nginx -y
+sudo nano /etc/nginx/sites-available/psr-pastebins
+
+server {
+    listen 80;
+    server_name psr-pastebins.ddns.net;
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+sudo ln -s /etc/nginx/sites-available/psr-pastebins /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
+sudo systemctl reload nginx
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx
+
+# service
+sudo nano /etc/systemd/system/psr-pastebins.service
+
+[Unit]
+Description=PSR Pastebins
+After=network.target
+[Service]
+User=_USER_
+WorkingDirectory=/home/_USER_/psr-pastebins
+ExecStart=/home/_USER_/psr-pastebins/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:8000 web:app
+Restart=always
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl daemon-reload
+sudo systemctl start psr-pastebins
+sudo systemctl enable psr-pastebins
+
+# cron
+crontab -e
+
+*/10 * * * * cd /home/_USER_/psr-pastebins && /home/_USER_/psr-pastebins/venv/bin/python scrape.py >> /home/_USER_/psr-pastebins/scrape.log 2>&1

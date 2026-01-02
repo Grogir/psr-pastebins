@@ -1,0 +1,108 @@
+body {
+    background-color: #1e1f22;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+/* --- TOP BAR LAYOUT --- */
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.left-panel {
+    flex: 1;
+}
+
+.left-panel h1 {
+    margin-top: 40px;
+    margin-bottom: 80px;
+}
+
+.left-panel input {
+    background-color: #2b2d31;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 8px;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* --- AUTHORS PANEL --- */
+
+/* .authors-panel {
+    margin-left: 30px;
+} */
+
+.authors-panel button {
+    display: block;
+    /* margin-bottom: 10px; */
+    background-color: #2b2d31;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 1px 16px;
+    cursor: pointer;
+}
+
+.authors-panel button:hover {
+    background-color: #333;
+}
+
+.authors-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(13, auto);
+    column-gap: 20px;
+}
+
+.authors-grid label {
+    display: block;
+    margin-right: 0px;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+/* --- PASTE TABLE --- */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #2b2d31;
+    text-align: left;
+    padding: 10px;
+}
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid #333;
+}
+
+tr:hover {
+    background-color: #2a2d35;
+}
+
+a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.archive {
+    /* text-align: center; */
+    padding-left: 32px;
+    /* opacity: 0.5; */
+}
+
+/* .archive a:hover {
+    opacity: 1;
+} */
