@@ -11,6 +11,7 @@ AUTHORS = [
     "Consair",
     "crafted",
     "Dabomstew",
+    "Decon082",
     "DerTeppich",
     "eddaket",
     "Elrevolver",

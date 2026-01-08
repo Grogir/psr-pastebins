@@ -132,10 +132,10 @@ def scrape_content(paste):
     try:
         r = requests.get(f"https://pastebin.com/raw/{paste['key']}", verify=certifi.where(), timeout=3)
     except Exception as e:
-        print(f"Error fetching paste {paste['key']}: {e}")
+        print(f"Error fetching paste {paste['key']} from {paste["author"]}: {e}")
         return
     if r.status_code != 200:
-        print(f"Error {r.status_code} fetching paste {paste['key']}")
+        print(f"Error {r.status_code} fetching paste {paste['key']} from {paste["author"]}")
         return
     paste["content"] = r.text
 
@@ -192,7 +192,7 @@ def check_old_pastes(conn):
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
     cur.execute("""
-        SELECT key, title, author, date
+        SELECT key, title, author, date, content
         FROM pastes
         ORDER BY
             last_checked IS NOT NULL,
@@ -206,23 +206,23 @@ def check_old_pastes(conn):
             "title": r["title"],
             "author": r["author"],
             "date": r["date"],
+            "content": r["content"],
         }
         scrape_content(paste)
-        if paste.get("content") is not None:
-            db_upsert_paste(cur, paste, False)
-            conn.commit()
+        db_upsert_paste(cur, paste, False)
+        conn.commit()
 
 def main():
     with sqlite3.connect(globals.DB_PATH, timeout=5) as conn:
         db_init(conn)
         run_number = get_and_increment_run_number(conn)
         if run_number % 3 == 0:
-            print(f"{time.strftime('%X')} Checking new pastes")
+            print(f"{time.strftime('%Y-%m-%d %X')} Checking new pastes")
             check_new_pastes(conn)
         else:
-            print(f"{time.strftime('%X')} Checking old pastes")
+            print(f"{time.strftime('%Y-%m-%d %X')} Checking old pastes")
             check_old_pastes(conn)
-        print(f"{time.strftime('%X')} Done")
+        print(f"{time.strftime('%Y-%m-%d %X')} Done")
 
 if __name__ == "__main__":
     main()
