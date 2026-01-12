@@ -132,10 +132,10 @@ def scrape_content(paste):
     try:
         r = requests.get(f"https://pastebin.com/raw/{paste['key']}", verify=certifi.where(), timeout=3)
     except Exception as e:
-        print(f"Error fetching paste {paste['key']} from {paste["author"]}: {e}")
+        print(f"Error fetching paste {paste['key']} from {paste['author']}: {e}")
         return
     if r.status_code != 200:
-        print(f"Error {r.status_code} fetching paste {paste['key']} from {paste["author"]}")
+        print(f"Error {r.status_code} fetching paste {paste['key']} from {paste['author']}")
         return
     paste["content"] = r.text
 

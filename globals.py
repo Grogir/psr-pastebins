@@ -33,6 +33,7 @@ AUTHORS = [
     "kinkmyboot",
     "krazyd4n",
     "LegendEater",
+    "listless",
     "luckytyphlosion",
     "MachWing",
     "MaddiicT",
